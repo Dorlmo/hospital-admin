@@ -64,6 +64,7 @@ const loginAction = async () => {
   const res = await login(username.value, password.value)
   // console.log(res)
   if (res.status === 'success') {
+    sessionStorage.setItem('cookie', res.JSESSIONID)
     sessionStorage.setItem('login-status', res.status)
     ElMessage({
       message: '登录成功',
@@ -79,7 +80,7 @@ const loginAction = async () => {
 }
 </script>
 
-<style>
+<style scoped>
 .login-page {
   display: flex;
   justify-content: center;

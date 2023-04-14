@@ -1,0 +1,395 @@
+{
+	"info": {
+		"_postman_id": "2a0159cb-372b-4c87-b75b-24e3fc6edd50",
+		"name": "New Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17340517"
+	},
+	"item": [
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8080/login?username=admin&password=123456",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"login"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "admin"
+						},
+						{
+							"key": "password",
+							"value": "123456"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addPatientInfo",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8080/addPatientInfo?patientName=我修院&age=19&gender=男&patientId=4401010000000001&patientTel=+86-114514919810&roomNum=212&doctorName=東雪蓮Official&result=轮椅主播重度贫雪&depNum=200",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"addPatientInfo"
+					],
+					"query": [
+						{
+							"key": "patientName",
+							"value": "我修院"
+						},
+						{
+							"key": "age",
+							"value": "19"
+						},
+						{
+							"key": "gender",
+							"value": "男"
+						},
+						{
+							"key": "patientId",
+							"value": "4401010000000001"
+						},
+						{
+							"key": "patientTel",
+							"value": "+86-114514919810"
+						},
+						{
+							"key": "roomNum",
+							"value": "212"
+						},
+						{
+							"key": "doctorName",
+							"value": "東雪蓮Official"
+						},
+						{
+							"key": "result",
+							"value": "轮椅主播重度贫雪"
+						},
+						{
+							"key": "depNum",
+							"value": "200"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updatePatientInfo",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8080/updatePatientInfo?patientName=田所浩二&age=24&gender=男&patientNum=2&patientTel=+86-114514919810&roomNum=211&doctorName=淳平&result=轮椅主播重度贫雪",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"updatePatientInfo"
+					],
+					"query": [
+						{
+							"key": "patientName",
+							"value": "田所浩二"
+						},
+						{
+							"key": "age",
+							"value": "24"
+						},
+						{
+							"key": "gender",
+							"value": "男"
+						},
+						{
+							"key": "patientNum",
+							"value": "2"
+						},
+						{
+							"key": "patientTel",
+							"value": "+86-114514919810"
+						},
+						{
+							"key": "roomNum",
+							"value": "211"
+						},
+						{
+							"key": "doctorName",
+							"value": "淳平"
+						},
+						{
+							"key": "result",
+							"value": "轮椅主播重度贫雪"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "info",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8080/info",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"info"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "patientList",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8080/patient/list",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"patient",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getPatientInfoByID",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8080/patient/id?patientNum=1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"patient",
+						"id"
+					],
+					"query": [
+						{
+							"key": "patientNum",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/medication/create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"patientNum\": 1,\n    \"medication\":[\n        \"雪❄️3\",\n        \"答辩💩114\"\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/medication/create",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"medication",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/diagnostic/create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"patientNum\": 1,\n    \"blood\": true,\n    \"xray\": false,\n    \"ct\": true,\n    \"ecg\": false,\n    \"bloodPressure\": true,\n    \"shit\": false\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/diagnostic/create",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"diagnostic",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/diagnostic/modify",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"patientNum\": 1,\n    \"blood\": true,\n    \"xray\": false,\n    \"ct\": false,\n    \"ecg\": false,\n    \"bloodPressure\": true,\n    \"shit\": false\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/diagnostic/modify",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"diagnostic",
+						"modify"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/diagnostic/delete",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"patientNum\": 1\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/diagnostic/delete",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"diagnostic",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/medication/list",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"patientNum\": 114514,\n    \"medication\":[\n        \"雪❄️2\",\n        \"答辩💩114\"\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/medication/list",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"medication",
+						"list"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

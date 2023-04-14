@@ -27,7 +27,7 @@ const routes = [
   {
     path: '/medicineInfo',
     name: 'medicineInfo',
-    component: () => import('@/pages/medicineInfo.vue')
+    component: () => import('@/pages/MedicineInfo.vue')
   },
   {
     path: '/checkInfo',
