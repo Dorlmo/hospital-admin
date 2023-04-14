@@ -69,7 +69,7 @@ export default {
 }
 
 .router-view {
-  width: 100%;
+  width: 87%;
   background: #f4f4f5;
 }
 
