@@ -136,7 +136,7 @@ export function updateCheckInfo(checkData) {
     url: '/diagnostic/modify',
     data: checkData
   }).then((res) => {
-    console.log(res.info)
+    return res.data
   })
 }
 
@@ -147,6 +147,6 @@ export function deleteCheckInfo(checkData) {
     url: '/diagnostic/delete',
     data: checkData
   }).then((res) => {
-    console.log(res)
+    return res.data
   })
 }

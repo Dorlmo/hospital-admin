@@ -103,6 +103,17 @@ const dataList = [
     result: '过于可爱',
     doctorName: '欧晓浚',
     department: '精神科'
+  },
+  {
+    patientNum: 1,
+    patientName: '123',
+    gender: '男',
+    age: 24,
+    patientTel: '1145141919810',
+    roomNum: 1,
+    result: '过于可爱',
+    doctorName: '欧晓浚',
+    department: '精神科'
   }
 ]
 
