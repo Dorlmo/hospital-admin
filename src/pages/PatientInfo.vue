@@ -1,16 +1,16 @@
 <template>
-  <div class="patient-info-layout">
+  <div>
     <el-container>
       <el-header class="patient-info-header">
         <div>
           <span>病人姓名：</span>
-          <el-input v-model="inputPatientName"></el-input>
+          <el-input class="short-input" v-model="inputPatientName"></el-input>
           <span>医生姓名：</span>
-          <el-input v-model="inputDoctorName"></el-input>
+          <el-input class="short-input" v-model="inputDoctorName"></el-input>
           <el-button @click="searchPatientInfo()"> 查询 </el-button>
         </div>
         <div class="right-header">
-          <el-button type="primary" size="large" @click="addPatientInfo()">
+          <el-button type="primary" size="large" @click="addDialogVisible=true">
             新增病人信息
           </el-button>
         </div>
@@ -68,7 +68,7 @@
           />
           <el-table-column label="操作" align="center">
             <template #default>
-              <el-button type="primary" size="small" @click="EditPatientInfo()"
+              <el-button type="primary" size="small" @click="editDialogVisible= true"
                 >编辑</el-button
               >
               <el-button type="primary" size="small" @click="getPatientDetail()"
@@ -79,7 +79,138 @@
         </el-table>
       </el-main>
     </el-container>
-    <EditPatientInfo></EditPatientInfo>
+    <el-dialog 
+      v-model="editDialogVisible"
+      title="编辑信息" 
+      width="50%"
+    >
+      <el-form
+        :label-position="right"
+        label-width="100px"
+        :model="editor"
+        :inline="true"
+      >
+      <el-row>
+        <el-col :span="8">
+          <el-form-item label="姓名">
+            <el-input v-model="editor.name" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
+          <el-form-item label="性别">
+            <el-select v-model="editor.gender" placeholder="选择">
+              <el-option label="男" value="male" />
+              <el-option label="女" value="female" />
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="7">
+          <el-form-item label="年龄">
+            <el-input v-model="editor.type" />
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="12">
+          <el-form-item label="电话">
+            <el-input v-model="editor.type" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
+          <el-form-item label="房间号">
+            <el-input v-model="editor.type" />
+          </el-form-item>
+        </el-col>
+      </el-row>
+        <el-form-item label="诊断结果">
+          <el-input v-model="editor.type" type="textarea" clas="result-textarea"/>
+        </el-form-item>
+    </el-form>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button
+            type="primary"
+            @click=";(editDialogVisible = false)"
+            size="large"
+          >
+            保存
+          </el-button>
+          <el-button
+            type="primary"
+            @click=";(editDialogVisible = false)"
+            size="large"
+          >
+            取消
+          </el-button>
+        </span>
+      </template>
+    </el-dialog>
+    <el-dialog 
+      v-model="addDialogVisible"
+      title="新增病人信息" 
+      width="50%"
+    >
+      <el-form
+        :label-position="right"
+        label-width="100px"
+        :model="editor"
+        :inline="true"
+      >
+      <el-row>
+        <el-col :span="8">
+          <el-form-item label="姓名">
+            <el-input v-model="editor.name" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
+          <el-form-item label="性别">
+            <el-select v-model="editor.gender" placeholder="选择">
+              <el-option label="男" value="male" />
+              <el-option label="女" value="female" />
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="7">
+          <el-form-item label="年龄">
+            <el-input v-model="editor.type" />
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="12">
+          <el-form-item label="电话">
+            <el-input v-model="editor.type" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
+          <el-form-item label="房间号">
+            <el-input v-model="editor.type" />
+          </el-form-item>
+        </el-col>
+      </el-row>
+        <el-form-item label="诊断结果">
+          <el-input v-model="editor.type" type="textarea" clas="result-textarea"/>
+        </el-form-item>
+    </el-form>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button
+            type="primary"
+            @click=";(addDialogVisible = false)"
+            size="large"
+          >
+            保存
+          </el-button>
+          <el-button
+            type="primary"
+            @click=";(addDialogVisible = false)"
+            size="large"
+          >
+            取消
+          </el-button>
+        </span>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -91,6 +222,9 @@ const inputPatientName = ref('')
 const inputDoctorName = ref('')
 const searchPatientName = ref('')
 const searchDoctorName = ref('')
+const editor = ref('')
+const editDialogVisible = ref(false)
+const addDialogVisible = ref(false)
 
 const dataList = [
   {
@@ -135,7 +269,9 @@ function searchPatientInfo() {
 
 function addPatientInfo() {}
 
-function EditPatientInfo() {}
+function EditPatientInfo() {
+  
+}
 
 function getPatientDetail() {}
 </script>
@@ -150,9 +286,22 @@ function getPatientDetail() {}
   margin-left: auto;
 }
 
-.el-input {
-  width: 200px;
-  height: 50%;
-  margin: 10px;
+:deep(.el-form-item__label) {
+  height: 30px;
+  line-height: 30px;
+  box-sizing: border-box;
+  font-size: 16px;
+  font-weight: 700;
 }
+
+.el-textarea{
+  width: 500px;
+}
+
+.short-input{
+  width: 120px;
+  height: 30px;
+  margin:10px;
+}
+
 </style>
