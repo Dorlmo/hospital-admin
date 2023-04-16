@@ -59,12 +59,12 @@ export function getPatientList() {
 export function getPatientById(patientNum) {
   return service({
     method: 'post',
-    url: '/patient',
+    url: '/patient/id',
     params: {
       patientNum
     }
   }).then((res) => {
-    return res.data
+    return res
   })
 }
 

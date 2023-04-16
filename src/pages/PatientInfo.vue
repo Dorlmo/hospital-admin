@@ -39,7 +39,7 @@
           <el-table-column
             prop="patientTel"
             label="电话"
-            width="150"
+            max-width="150"
             align="center"
           />
           <el-table-column
@@ -51,7 +51,7 @@
           <el-table-column
             prop="result"
             label="诊断结果"
-            width="250"
+            max-width="250"
             align="center"
           />
           <el-table-column
@@ -66,7 +66,7 @@
             width="120"
             align="center"
           />
-          <el-table-column label="操作">
+          <el-table-column label="操作" align="center">
             <template #default>
               <el-button type="primary" size="small" @click="EditPatientInfo()"
                 >编辑</el-button

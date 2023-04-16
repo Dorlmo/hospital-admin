@@ -21,37 +21,39 @@
           <el-table-column
             prop="patientName"
             label="姓名"
-            width="120"
+            width="150"
             align="center"
           />
           <el-table-column
             prop="doctorName"
             label="医生姓名"
-            width="150"
+            width="100"
             align="center"
           />
           <el-table-column
             prop="result"
             label="诊断结果"
-            width="270"
+            max-width="350"
             align="center"
           />
           <el-table-column
             prop="prescriptionArray"
             label="处方单"
-            width="330"
+            max-width="300"
             align="center"
           />
           <el-table-column
             prop="created_at"
             label="诊断时间"
-            width="200"
+            max-width="200"
             align="center"
             sortable
           />
           <el-table-column label="操作" align="center" width="100">
             <template v-slot="scope">
-              <el-button @click="change(scope.row)">修改</el-button>
+              <el-button @click="change(scope.row)" type="primary"
+                >修改处方</el-button
+              >
             </template>
           </el-table-column>
         </el-table>
@@ -117,15 +119,49 @@ const searchPatientNum = ref('')
 const searchPatientName = ref('')
 const updateKey = ref(true)
 let medicineData = []
+let patientData = []
 let showList = []
+let showListArray = []
+let patientArray = []
+let patNumArr = []
 
-onMounted(async () => {
+const initFn = async () => {
   medicineData = await getMedicineList()
   for (let i in medicineData) {
     medicineData[i].created_at = format(medicineData[i].created_at) // 去掉时间，保留日期
   }
-  showList = medicineData
+  patientData = await getPatientList()
+
+  patientArray = patientData.patientList
+  for (let index = 0; index < medicineData.length; index++) {
+    let element = patientArray[index]
+    let objectOne = medicineData[index]
+    let medicine1 = { prescriptionArray: objectOne.prescriptionArray }
+    let medicine2 = { created_at: objectOne.created_at }
+    let element1 = medicineData[index]
+    // console.log(patNumArr.indexOf(element1.patientNum))
+    if (patNumArr.indexOf(element1.patientNum) !== -1) {
+      console.log(showListArray[patNumArr.indexOf(element1.patientNum)])
+      showListArray.push({
+        ...showListArray[patNumArr.indexOf(element1.patientNum)],
+        ...medicine1,
+        ...medicine2
+      })
+    } else {
+      showListArray.push({
+        ...element,
+        ...medicine1,
+        ...medicine2
+      })
+    }
+    patNumArr.push(element1.patientNum)
+  }
+  showList = showListArray
   updateKey.value = !updateKey.value
+}
+
+onMounted(() => {
+  initFn()
 })
 
 function searchPatientInfo() {
@@ -134,7 +170,7 @@ function searchPatientInfo() {
 }
 
 watch([searchPatientNum, searchPatientName], () => {
-  showList = medicineData.filter((obj) => {
+  showList = showListArray.filter((obj) => {
     return (
       String(obj.patientNum).indexOf(searchPatientNum.value) > -1 &&
       String(obj.patientName).indexOf(searchPatientName.value) > -1
@@ -147,10 +183,9 @@ let dialogVisible = ref(false)
 let updatePatientNum = ref('')
 let updatePatientName = ref('')
 let updateDoctorName = ref('')
-const change = (data) => {
+const change = async (data) => {
   updatePatientNum.value = data.patientNum
   updatePatientName.value = data.patientName
-  console.log(data)
   dialogVisible.value = !dialogVisible.value
 }
 
@@ -190,10 +225,13 @@ const options = [
   }
 ]
 
-const updateMedicine = () => {
+const updateMedicine = async () => {
   let medicineArray = Array.from(selectData.value)
-  console.log(medicineArray)
-  dialogVisible.value = !dialogVisible.value
+  const data = {
+    patientNum: updatePatientNum.value,
+    medication: medicineArray
+  }
+  await createMedicine(data)
 }
 </script>
 

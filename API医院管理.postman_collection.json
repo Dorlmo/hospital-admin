@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "2a0159cb-372b-4c87-b75b-24e3fc6edd50",
-		"name": "New Collection",
+		"name": "API医院管理",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "17340517"
 	},
@@ -44,7 +44,7 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:8080/addPatientInfo?patientName=我修院&age=19&gender=男&patientId=4401010000000001&patientTel=+86-114514919810&roomNum=212&doctorName=東雪蓮Official&result=轮椅主播重度贫雪&depNum=200",
+					"raw": "http://127.0.0.1:8080/addPatientInfo?patientName=我修院&age=19&gender=男&patientId=4401010000000002&patientTel=+86-114514919810&roomNum=212&doctorName=東雪蓮Official&result=轮椅主播重度贫雪&depNum=200",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -71,7 +71,7 @@
 						},
 						{
 							"key": "patientId",
-							"value": "4401010000000001"
+							"value": "4401010000000002"
 						},
 						{
 							"key": "patientTel",

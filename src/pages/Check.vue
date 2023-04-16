@@ -15,64 +15,131 @@
           <el-table-column
             prop="patientNum"
             label="病例号"
-            width="90"
+            width="100"
             align="center"
           />
           <el-table-column
             prop="patientName"
             label="姓名"
-            width="110"
+            width="130"
             align="center"
           />
           <el-table-column
             prop="blood"
             label="血液检查"
-            width="120"
+            width="140"
             align="center"
-          />
+          >
+            <template v-slot="scope"
+              ><el-tag
+                class="mx-1"
+                type="warning"
+                effect="light"
+                v-if="scope.row.blood === false"
+              >
+                未检查 </el-tag
+              ><el-tag class="mx-1" type="success" effect="light" v-else>
+                已检查
+              </el-tag></template
+            ></el-table-column
+          >
           <el-table-column
             prop="bloodPressure"
             label="血压检查"
-            width="120"
+            width="140"
             align="center"
-          />
-          <el-table-column
-            prop="ct"
-            label="CT检查"
-            width="120"
-            align="center"
-          />
+          >
+            <template v-slot="scope"
+              ><el-tag
+                class="mx-1"
+                type="warning"
+                effect="light"
+                v-if="scope.row.bloodPressure === false"
+              >
+                未检查 </el-tag
+              ><el-tag class="mx-1" type="success" effect="light" v-else>
+                已检查
+              </el-tag></template
+            ></el-table-column
+          >
+          <el-table-column prop="ct" label="CT检查" width="120" align="center">
+            <template v-slot="scope"
+              ><el-tag
+                class="mx-1"
+                type="warning"
+                effect="light"
+                v-if="scope.row.ct === false"
+              >
+                未检查 </el-tag
+              ><el-tag class="mx-1" type="success" effect="light" v-else>
+                已检查
+              </el-tag></template
+            ></el-table-column
+          >
           <el-table-column
             prop="xray"
             label="X光检查"
-            width="120"
+            width="140"
             align="center"
-          />
+          >
+            <template v-slot="scope"
+              ><el-tag
+                class="mx-1"
+                type="warning"
+                effect="light"
+                v-if="scope.row.xray === false"
+              >
+                未检查 </el-tag
+              ><el-tag class="mx-1" type="success" effect="light" v-else>
+                已检查
+              </el-tag></template
+            ></el-table-column
+          >
           <el-table-column
             prop="shit"
             label="粪便分析"
-            width="120"
+            width="140"
             align="center"
-          />
+          >
+            <template v-slot="scope"
+              ><el-tag
+                class="mx-1"
+                type="warning"
+                effect="light"
+                v-if="scope.row.shit === false"
+              >
+                未检查 </el-tag
+              ><el-tag class="mx-1" type="success" effect="light" v-else>
+                已检查
+              </el-tag></template
+            ></el-table-column
+          >
           <el-table-column
-            prop="ecg"
             label="心电图"
-            width="120"
+            max-width="120"
             align="center"
-          />
-          <el-table-column
-            prop="created_at"
-            label="诊断时间"
-            width="200"
-            align="center"
-          />
-          <el-table-column label="操作">
+            prop="ecg"
+          >
+            <template v-slot="scope"
+              ><el-tag
+                class="mx-1"
+                type="warning"
+                effect="light"
+                v-if="scope.row.ecg === false"
+              >
+                未检查 </el-tag
+              ><el-tag class="mx-1" type="success" effect="light" v-else>
+                已检查
+              </el-tag></template
+            ></el-table-column
+          >
+          <el-table-column label="操作" align="center" max-width="300">
             <template v-slot="scope">
               <el-button @click="changeCheck(scope.row)">修改</el-button>
               <el-button
                 type="danger"
                 @click="deleteCheckRow(scope.row.patientNum)"
-                >删除</el-button
+                >重置</el-button
               >
             </template>
           </el-table-column>
@@ -155,52 +222,53 @@ import {
   updateCheckInfo,
   deleteCheckInfo
 } from '../service/api.js'
+import { all } from 'axios'
 
 const inputPatientNum = ref('')
 const inputPatientName = ref('')
 const searchPatientNum = ref('')
 const searchPatientName = ref('')
 const updateKey = ref(true)
-let medicineData = []
-let showData = [
-  {
-    patientNum: 1,
-    blood: true,
-    xray: true,
-    ct: true,
-    ecg: false,
-    bloodPressure: true,
-    shit: false
-  },
-  {
-    patientNum: 2,
-    blood: true,
-    xray: true,
-    ct: true,
-    ecg: false,
-    bloodPressure: true,
-    shit: false
-  },
-  {
-    patientNum: 3,
-    blood: true,
-    xray: true,
-    ct: true,
-    ecg: false,
-    bloodPressure: true,
-    shit: false
-  }
-]
+let patientData = []
+let showData = []
+let showList = []
+let patientList = []
+let defaultData = {
+  blood: false,
+  xray: false,
+  ct: false,
+  ecg: false,
+  bloodPressure: false,
+  shit: false
+}
+let isInit = {}
 
-let showList = showData
-// onMounted(async () => {
-//   medicineData = await getMedicineList()
-//   for (let i in medicineData) {
-//     medicineData[i].created_at = format(medicineData[i].created_at) // 去掉时间，保留日期
-//   }
-//   showList = medicineData
-//   updateKey.value = !updateKey.value
-// })
+const init = async () => {
+  showData = []
+  patientList = await getPatientList()
+  patientData = patientList.patientList
+  for (let index = 0; index < patientData.length; index++) {
+    const res = await getPatientById(patientData[index].patientNum)
+    if (res.data.patient_diagnostic.length === 0) {
+      isInit = { isInit: true }
+      let allData = { ...res.data.patient, ...defaultData, ...isInit }
+      showData.push(allData)
+    } else {
+      isInit = { isInit: false }
+      let addData = {
+        ...res.data.patient,
+        ...res.data.patient_diagnostic[0],
+        ...isInit
+      }
+      showData.push(addData)
+    }
+  }
+  showList = showData
+  updateKey.value = !updateKey.value
+}
+onMounted(() => {
+  init()
+})
 
 function searchPatientInfo() {
   searchPatientNum.value = inputPatientNum.value
@@ -226,6 +294,7 @@ let updateCt = ref(false)
 let updateEcg = ref(false)
 let updateShit = ref(false)
 let updateXray = ref(false)
+let isTrueInit = ref(false)
 const changeCheck = (data) => {
   updatePatientNum.value = data.patientNum
   updatePatientName.value = data.patientName
@@ -235,6 +304,7 @@ const changeCheck = (data) => {
   updateEcg.value = data.ecg
   updateShit.value = data.shit
   updateXray.value = data.xray
+  isTrueInit.value = data.isInit
 
   dialogVisible.value = !dialogVisible.value
 }
@@ -250,14 +320,27 @@ const updateCheck = async () => {
     bloodPressure: updateBloodPressure.value,
     shit: updateShit.value
   }
-  await updateCheckInfo(upCheckData).then((res) => {
-    if (res.status === 'success') {
-      ElMessage({
-        message: '修改成功',
-        type: 'success'
-      })
-    }
-  })
+  if (isTrueInit.value === false) {
+    await updateCheckInfo(upCheckData).then((res) => {
+      if (res.status === 'success') {
+        ElMessage({
+          message: '修改成功',
+          type: 'success'
+        })
+      }
+    })
+    init()
+  } else {
+    await createCheck(upCheckData).then((res) => {
+      if (res.status === 'success') {
+        ElMessage({
+          message: '修改成功',
+          type: 'success'
+        })
+      }
+    })
+    init()
+  }
 }
 
 const deleteCheckRow = async (patientNumber) => {
