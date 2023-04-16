@@ -467,10 +467,6 @@ function searchPatientInfo() {
 }
 
 function openAddPage(){
-  for(let key in newPatient){
-    newPatient[key]=''
-  }
-  
   addDialogVisible.value=true
 }
 
@@ -490,11 +486,18 @@ function openDetailPage(data) {
 }
 
 async function addPatientInfo() {
+  let maxNum = 1
+  let length = dataList.value.length
+  for(let i = 0;i<length;i++){
+    if(dataList.value[i].patientNum>maxNum)
+    maxNum = dataList.value[i].patientNum
+  }
+  maxNum++
   await addPatient(
     newPatient.patientName,
-    newPatient.age,
+    newPatient.age, 
     newPatient.gender,
-    newPatient.patientNum,
+    maxNum,
     newPatient.patientTel,
     newPatient.roomNum,
     newPatient.doctorName,
