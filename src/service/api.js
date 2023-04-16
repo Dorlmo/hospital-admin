@@ -59,12 +59,12 @@ export function getPatientList() {
 export function getPatientById(patientNum) {
   return service({
     method: 'post',
-    url: '/patient',
+    url: '/patient/id',
     params: {
       patientNum
     }
   }).then((res) => {
-    return res.data
+    return res
   })
 }
 
@@ -114,6 +114,7 @@ export function createMedicine(createData) {
     url: '/medication/create',
     data: createData
   }).then((res) => {
+    console.log(res)
     return res
   })
 }
@@ -125,6 +126,7 @@ export function createCheck(createData) {
     url: '/diagnostic/create',
     data: createData
   }).then((res) => {
+    console.log(res)
     return res
   })
 }
